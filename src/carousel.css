@@ -1,0 +1,96 @@
+/* Trigger, injected above each screenshot table. Colors follow GitHub's Primer theme. */
+.ghc-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
+.ghc-trigger {
+  display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px; border-radius: 6px;
+  border: 1px solid var(--button-default-borderColor-rest, #d1d9e0);
+  background: var(--button-default-bgColor-rest, #f6f8fa);
+  color: var(--button-default-fgColor-rest, var(--fgColor-default, #1f2328));
+  font-family: inherit; font-size: 12px; font-weight: 500; line-height: 20px; cursor: pointer;
+}
+.ghc-trigger:hover { border-color: var(--fgColor-accent, #0969da); color: var(--fgColor-accent, #0969da); }
+.ghc-trigger:focus-visible { outline: 2px solid var(--fgColor-accent, #0969da); outline-offset: 2px; }
+.ghc-trigger svg { width: 16px; height: 16px; fill: currentColor; }
+.ghc-hint-inline { font-size: 12px; color: var(--fgColor-muted, #59636e); }
+.markdown-body table[data-ghc="on"] img { cursor: zoom-in; }
+
+html.ghc-lock { overflow: hidden !important; }
+
+/* Overlay. Fixed dark palette in every GitHub theme; tokens stay scoped to the overlay. */
+.ghc-overlay {
+  --ghc-bg: #0b0d10;
+  --ghc-surface: #171a1f;
+  --ghc-line: #2b3038;
+  --ghc-fg: #e6e9ee;
+  --ghc-muted: #8b939e;
+  --ghc-accent: #58a6ff;
+  position: fixed; inset: 0; z-index: 2147483000;
+  display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto;
+  background: var(--ghc-bg); color: var(--ghc-fg); color-scheme: dark;
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+}
+.ghc-overlay[hidden] { display: none !important; }
+.ghc-overlay *, .ghc-overlay *::before, .ghc-overlay *::after { box-sizing: border-box; }
+.ghc-overlay button, .ghc-overlay input { font: inherit; color: inherit; margin: 0; }
+.ghc-overlay :focus-visible { outline: 2px solid var(--ghc-accent); outline-offset: 2px; }
+.ghc-overlay kbd {
+  font: 11px ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; padding: 1px 6px;
+  border: 1px solid var(--ghc-line); border-bottom-width: 2px; border-radius: 6px;
+  background: var(--ghc-surface); color: var(--ghc-fg); box-shadow: none; line-height: 1.4;
+}
+
+.ghc-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 10px 16px; border-bottom: 1px solid var(--ghc-line); }
+.ghc-title { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.ghc-label { font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ghc-count { font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ghc-muted); }
+.ghc-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.ghc-btn {
+  min-width: 32px; height: 32px; padding: 0 10px; border-radius: 6px; border: 1px solid var(--ghc-line);
+  background: var(--ghc-surface); color: var(--ghc-fg); cursor: pointer; font-size: 13px;
+}
+.ghc-btn:hover { border-color: var(--ghc-muted); }
+.ghc-btn:disabled { opacity: .35; cursor: default; }
+.ghc-seg { display: inline-flex; }
+.ghc-seg .ghc-btn:first-child { border-radius: 6px 0 0 6px; }
+.ghc-seg .ghc-btn:last-child { border-radius: 0 6px 6px 0; border-left: 0; }
+.ghc-seg .ghc-btn[aria-pressed="true"] { background: var(--ghc-accent); border-color: var(--ghc-accent); color: var(--ghc-bg); font-weight: 600; }
+.ghc-zoom { font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ghc-muted); min-width: 5ch; text-align: right; font-variant-numeric: tabular-nums; }
+.ghc-check { display: inline-flex; align-items: center; gap: 6px; padding: 0 6px; font-size: 13px; cursor: pointer; font-weight: 400; }
+
+.ghc-stage { position: relative; min-height: 0; display: flex; }
+.ghc-panels { flex: 1; min-width: 0; display: flex; gap: 12px; padding: 12px 60px; }
+.ghc-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.ghc-cap { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ghc-muted); text-align: center; min-height: 1.5em; }
+.ghc-vp { flex: 1; min-height: 0; position: relative; overflow: hidden; border-radius: 6px; background: var(--ghc-surface); touch-action: none; cursor: zoom-in; }
+.ghc-vp.ghc-zoomed { cursor: grab; }
+.ghc-vp.ghc-dragging.ghc-zoomed { cursor: grabbing; }
+.ghc-overlay .ghc-vp img {
+  position: absolute; left: 0; top: 0; max-width: none; max-height: none; transform-origin: 0 0;
+  user-select: none; -webkit-user-drag: none; background: none; border: 0;
+}
+.ghc-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 1; width: 40px; height: 72px; border-radius: 6px;
+  border: 1px solid var(--ghc-line); background: var(--ghc-surface); color: var(--ghc-fg); font-size: 24px; cursor: pointer;
+}
+.ghc-nav:disabled { opacity: .25; cursor: default; }
+.ghc-prev { left: 10px; }
+.ghc-next { right: 10px; }
+
+.ghc-strip { display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px; border-top: 1px solid var(--ghc-line); }
+.ghc-thumb {
+  flex: none; display: grid; gap: 4px; justify-items: center; padding: 6px; border-radius: 6px;
+  border: 1px solid transparent; background: none; cursor: pointer; color: var(--ghc-muted); font-size: 11px;
+}
+.ghc-thumb-imgs { display: flex; gap: 3px; }
+.ghc-overlay .ghc-thumb img { height: 64px; width: auto; max-width: none; border-radius: 3px; opacity: .6; }
+.ghc-thumb[aria-current="true"] { border-color: var(--ghc-accent); background: var(--ghc-surface); color: var(--ghc-fg); }
+.ghc-overlay .ghc-thumb[aria-current="true"] img { opacity: 1; }
+.ghc-keys { font-size: 12px; color: var(--ghc-muted); text-align: center; padding: 0 16px 10px; }
+
+@media (max-width: 640px) {
+  .ghc-panels { padding: 8px; gap: 6px; }
+  .ghc-nav { width: 32px; height: 56px; font-size: 20px; opacity: .8; }
+  .ghc-prev { left: 4px; }
+  .ghc-next { right: 4px; }
+  .ghc-keys { display: none; }
+}

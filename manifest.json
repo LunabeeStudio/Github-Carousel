@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "PR Screenshot Carousel",
+  "version": "0.1.0",
+  "description": "Turns screenshot tables in GitHub pull requests into a zoomable carousel.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "run_at": "document_idle",
+      "js": ["src/settings.js", "src/carousel.js", "src/content.js"],
+      "css": ["src/carousel.css"]
+    }
+  ],
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": false
+  }
+}
