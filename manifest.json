@@ -3,6 +3,12 @@
   "name": "PR Screenshot Carousel",
   "version": "0.1.0",
   "description": "Turns screenshot tables in GitHub pull requests into a zoomable carousel.",
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
   "permissions": ["storage"],
   "content_scripts": [
     {
