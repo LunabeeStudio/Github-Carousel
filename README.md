@@ -44,7 +44,7 @@ Slide unit, sync zoom and "keep zoom when changing slide" are saved with Chrome 
 
 ## Permissions
 
-Only `storage`, for the settings. The extension runs on `github.com` pages and sends no data anywhere.
+Only `storage`, for the settings. The extension runs on `github.com` pages and sends no data anywhere. See the [privacy policy](PRIVACY.md).
 
 ## Development
 
