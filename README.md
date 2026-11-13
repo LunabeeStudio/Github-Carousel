@@ -63,3 +63,7 @@ Build the Chrome Web Store upload (`dist/github-carousel-<version>.zip`):
 ## Credits
 
 Icon: [Carrousel](https://www.flaticon.com/fr/icone-gratuite/carrousel_2731218) by [AmethystDesign](https://www.flaticon.com/fr/auteurs/amethystdesign) on [Flaticon](https://www.flaticon.com/).
+
+## License
+
+[MIT](LICENSE)
