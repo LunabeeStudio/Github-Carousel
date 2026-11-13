@@ -4,6 +4,12 @@ Chrome extension that turns screenshot tables in GitHub pull requests into a ful
 
 It finds every table in a PR description or comment that holds images, adds a **View N screenshots in carousel** button above it, and opens the carousel when you click the button or any screenshot in the table.
 
+![Before and After screenshots side by side in the carousel](docs/screenshots/carousel.png)
+
+| Sync zoom | Trigger button on the PR |
+| --- | --- |
+| ![Before and After zoomed on the same spot](docs/screenshots/sync-zoom.png) | ![The "View 4 screenshots in carousel" button above a screenshot table](docs/screenshots/pr-page.png) |
+
 ## Install
 
 There is no store release yet. Load it unpacked:
