@@ -26,7 +26,7 @@ const GHCCarousel = (() => {
       <button class="ghc-nav ghc-next" type="button" data-act="next" aria-label="Next slide">›</button>
     </div>
     <div class="ghc-strip" aria-label="Slides"></div>
-    <div class="ghc-keys"><kbd>←</kbd> <kbd>→</kbd> slides · scroll or pinch to zoom · drag to pan · double-click to zoom · <kbd>S</kbd> sync · <kbd>O</kbd> original · <kbd>Esc</kbd> close</div>`;
+    <div class="ghc-keys"><kbd>←</kbd> <kbd>→</kbd> slides · <span class="ghc-wheel-hint"></span> · drag to pan · double-click to zoom · <kbd>S</kbd> sync · <kbd>O</kbd> original · <kbd>Esc</kbd> close</div>`;
 
   let ov = null, panelsEl, stripEl, zoomEl;
   let S = null;
@@ -74,6 +74,7 @@ const GHCCarousel = (() => {
     S.slides = buildSlides(rows, S.mode);
     S.i = indexOf(ri, ci);
     syncToolbar();
+    ov.dataset.strip = opts().strip;
     ov.hidden = false;
     document.documentElement.classList.add('ghc-lock');
     buildStrip();
@@ -115,6 +116,7 @@ const GHCCarousel = (() => {
     const o = opts();
     ov.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === (S?.mode ?? o.mode))));
     q('.ghc-sync').checked = o.sync;
+    q('.ghc-wheel-hint').textContent = o.wheelZoom ? 'scroll or pinch to zoom' : 'pinch or Ctrl + scroll to zoom · scroll to pan';
   }
 
   function buildStrip() {
@@ -124,7 +126,7 @@ const GHCCarousel = (() => {
       b.type = 'button';
       const imgs = el('span', 'ghc-thumb-imgs');
       sl.cells.forEach(c => { const im = new Image(); im.src = c.src; im.alt = ''; imgs.append(im); });
-      const lbl = el('span');
+      const lbl = el('span', 'ghc-thumb-label');
       lbl.textContent = sl.title;
       b.append(imgs, lbl);
       b.addEventListener('click', () => go(i));
@@ -209,6 +211,8 @@ const GHCCarousel = (() => {
 
     vp.addEventListener('wheel', e => {
       e.preventDefault();
+      // Trackpad pinch arrives as a wheel event with ctrlKey.
+      if (!e.ctrlKey && !opts().wheelZoom) return pan(targets(j), -e.deltaX, -e.deltaY);
       const [px, py] = local(e.clientX, e.clientY);
       zoomAt(targets(j), Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0015)), px, py);
     }, { passive: false });
@@ -300,7 +304,8 @@ const GHCCarousel = (() => {
     e.preventDefault();
   }, true);
 
-  window.addEventListener('resize', () => S && S.T.forEach(t => t.ready && fit(t, null)));
+  const refit = () => S && S.T.forEach(t => t.ready && fit(t, null));
+  window.addEventListener('resize', refit);
   document.addEventListener('turbo:before-visit', close);
   window.addEventListener('popstate', close);
 
@@ -312,6 +317,7 @@ const GHCCarousel = (() => {
     savedMode = o.mode;
     if (!S) return;
     if (modeChanged) applyMode(o.mode);
+    if (ov.dataset.strip !== o.strip) { ov.dataset.strip = o.strip; refit(); }
     syncToolbar();
   });
 

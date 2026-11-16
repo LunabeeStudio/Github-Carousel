@@ -23,11 +23,20 @@
       <label><input type="radio" name="mode" value="single"> One image</label>
     </fieldset>
     <fieldset>
+      <legend>Thumbnails</legend>
+      <label><input type="radio" name="strip" value="left"> Left</label>
+      <label><input type="radio" name="strip" value="right"> Right</label>
+      <label><input type="radio" name="strip" value="bottom"> Bottom</label>
+      <p class="hint">Narrow windows always show them at the bottom.</p>
+    </fieldset>
+    <fieldset>
       <legend>Zoom</legend>
       <label><input type="checkbox" name="sync"> Sync zoom across columns</label>
       <p class="hint">Zoom and pan move Before and After together.</p>
       <label><input type="checkbox" name="keep"> Keep zoom when changing slide</label>
       <p class="hint">Off resets every slide to fit.</p>
+      <label><input type="checkbox" name="wheelZoom"> Scroll wheel zooms</label>
+      <p class="hint">Off scrolls a zoomed image. Pinch or Ctrl + scroll always zooms.</p>
     </fieldset>
     <p class="status" id="status" aria-live="polite"></p>
   </form>
