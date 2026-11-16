@@ -1,6 +1,6 @@
 // Shared by the content scripts and the options page.
 const GHCSettings = (() => {
-  const DEFAULTS = { mode: 'row', sync: true, keep: false };
+  const DEFAULTS = { mode: 'row', sync: true, keep: false, strip: 'left', wheelZoom: false };
   let cache = { ...DEFAULTS };
   const listeners = new Set();
   const notify = () => listeners.forEach(fn => fn(cache));

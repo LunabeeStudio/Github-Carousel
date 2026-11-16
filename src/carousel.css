@@ -25,6 +25,7 @@ html.ghc-lock { overflow: hidden !important; }
   --ghc-accent: #58a6ff;
   position: fixed; inset: 0; z-index: 2147483000;
   display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto;
+  grid-template-areas: "top" "stage" "strip" "keys";
   background: var(--ghc-bg); color: var(--ghc-fg); color-scheme: dark;
   font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
   padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
@@ -39,7 +40,7 @@ html.ghc-lock { overflow: hidden !important; }
   background: var(--ghc-surface); color: var(--ghc-fg); box-shadow: none; line-height: 1.4;
 }
 
-.ghc-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 10px 16px; border-bottom: 1px solid var(--ghc-line); }
+.ghc-top { grid-area: top; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 10px 16px; border-bottom: 1px solid var(--ghc-line); }
 .ghc-title { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
 .ghc-label { font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ghc-count { font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ghc-muted); }
@@ -57,7 +58,7 @@ html.ghc-lock { overflow: hidden !important; }
 .ghc-zoom { font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ghc-muted); min-width: 5ch; text-align: right; font-variant-numeric: tabular-nums; }
 .ghc-check { display: inline-flex; align-items: center; gap: 6px; padding: 0 6px; font-size: 13px; cursor: pointer; font-weight: 400; }
 
-.ghc-stage { position: relative; min-height: 0; display: flex; }
+.ghc-stage { grid-area: stage; position: relative; min-height: 0; display: flex; }
 .ghc-panels { flex: 1; min-width: 0; display: flex; gap: 12px; padding: 12px 60px; }
 .ghc-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
 .ghc-cap { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ghc-muted); text-align: center; min-height: 1.5em; }
@@ -76,7 +77,7 @@ html.ghc-lock { overflow: hidden !important; }
 .ghc-prev { left: 10px; }
 .ghc-next { right: 10px; }
 
-.ghc-strip { display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px; border-top: 1px solid var(--ghc-line); }
+.ghc-strip { grid-area: strip; display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px; border-top: 1px solid var(--ghc-line); }
 .ghc-thumb {
   flex: none; display: grid; gap: 4px; justify-items: center; padding: 6px; border-radius: 6px;
   border: 1px solid transparent; background: none; cursor: pointer; color: var(--ghc-muted); font-size: 11px;
@@ -85,7 +86,20 @@ html.ghc-lock { overflow: hidden !important; }
 .ghc-overlay .ghc-thumb img { height: 64px; width: auto; max-width: none; border-radius: 3px; opacity: .6; }
 .ghc-thumb[aria-current="true"] { border-color: var(--ghc-accent); background: var(--ghc-surface); color: var(--ghc-fg); }
 .ghc-overlay .ghc-thumb[aria-current="true"] img { opacity: 1; }
-.ghc-keys { font-size: 12px; color: var(--ghc-muted); text-align: center; padding: 0 16px 10px; }
+.ghc-keys { grid-area: keys; font-size: 12px; color: var(--ghc-muted); text-align: center; padding: 0 16px 10px; }
+
+/* Strip on the side (data-strip on the overlay). Narrow screens keep it at the bottom. */
+@media (min-width: 641px) {
+  .ghc-overlay:is([data-strip="left"], [data-strip="right"]) { grid-template-rows: auto minmax(0, 1fr) auto; }
+  .ghc-overlay[data-strip="left"] { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "top top" "strip stage" "keys keys"; }
+  .ghc-overlay[data-strip="right"] { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "top top" "stage strip" "keys keys"; }
+  .ghc-overlay:is([data-strip="left"], [data-strip="right"]) .ghc-strip { flex-direction: column; width: 184px; overflow: hidden auto; padding: 12px 10px; border-top: 0; }
+  .ghc-overlay[data-strip="left"] .ghc-strip { border-right: 1px solid var(--ghc-line); }
+  .ghc-overlay[data-strip="right"] .ghc-strip { border-left: 1px solid var(--ghc-line); }
+  .ghc-overlay:is([data-strip="left"], [data-strip="right"]) .ghc-thumb-imgs { max-width: 100%; }
+  .ghc-overlay:is([data-strip="left"], [data-strip="right"]) .ghc-thumb img { min-width: 0; object-fit: contain; }
+  .ghc-overlay:is([data-strip="left"], [data-strip="right"]) .ghc-thumb-label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
 
 @media (max-width: 640px) {
   .ghc-panels { padding: 8px; gap: 6px; }
