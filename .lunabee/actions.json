@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LunabeeStudio/lb-cli/main/schema/v1/actions.schema.json",
+  "version": 1,
+  "actions": {
+    "test": {
+      "title": "🧪 Check script syntax",
+      "description": "Runs node --check on every content script and the options page. The project has no automated tests.",
+      "command": "for f in src/*.js options/options.js; do node --check \"$f\" || exit 1; done",
+      "risk": "safe"
+    },
+    "build chrome": {
+      "title": "🔨 Build store zip",
+      "description": "Packages the extension into dist/github-carousel-<version>.zip for the Chrome Web Store.",
+      "command": "./scripts/package.sh",
+      "risk": "safe"
+    },
+    "release chrome": {
+      "title": "🚀 Publish to Chrome Web Store",
+      "description": "Builds the zip, uploads it with the Chrome Web Store API and submits it for review. Bump the manifest version first.",
+      "command": "./scripts/publish.sh",
+      "risk": "remote"
+    }
+  }
+}
