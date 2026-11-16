@@ -66,6 +66,12 @@ Build the Chrome Web Store upload (`dist/github-carousel-<version>.zip`):
 ./scripts/package.sh
 ```
 
+Publish a new version: bump `version` in `manifest.json`, then build, upload and submit it for review with the Chrome Web Store API. It needs `gcloud` signed in with an account allowed to impersonate `cws-publisher@github-carousel.iam.gserviceaccount.com`:
+
+```sh
+./scripts/publish.sh
+```
+
 ## Credits
 
 Icon: [Carrousel](https://www.flaticon.com/fr/icone-gratuite/carrousel_2731218) by [AmethystDesign](https://www.flaticon.com/fr/auteurs/amethystdesign) on [Flaticon](https://www.flaticon.com/).
